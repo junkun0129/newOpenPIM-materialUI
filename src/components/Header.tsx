@@ -1,3 +1,4 @@
+import { Search } from "@mui/icons-material";
 import {
   AppBar,
   Box,
@@ -12,7 +13,7 @@ function Header() {
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
+        <AppBar position="static" color="transparent">
           <Toolbar>
             <IconButton
               size="large"
@@ -26,7 +27,7 @@ function Header() {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               News
             </Typography>
-            <Button color="inherit">Login</Button>
+            <input></input>
           </Toolbar>
         </AppBar>
       </Box>
