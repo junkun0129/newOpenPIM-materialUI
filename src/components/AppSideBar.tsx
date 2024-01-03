@@ -8,103 +8,59 @@ import {
   ListItemText,
   Theme,
   CSSObject,
+  BoxProps,
+  Box,
+  Paper,
+  ListItemIcon,
+  ListItemProps,
 } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { AnimatePresence, motion } from "framer-motion";
-
+import ArticleIcon from "@mui/icons-material/Article";
 const drawerWidth = 240;
 
 interface MiniDrawerProps {
   open: boolean;
 }
 function AppSideBar() {
-  const openedMixin = (theme: Theme): CSSObject => ({
-    width: drawerWidth,
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    overflowX: "hidden",
-  });
+  const [selected, setSelected] = useState(0);
 
-  const closedMixin = (theme: Theme): CSSObject => ({
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: "hidden",
-    width: `calc(${theme.spacing(7)} + 1px)`,
-    [theme.breakpoints.up("sm")]: {
-      width: `calc(${theme.spacing(8)} + 1px)`,
+  const StyledListItem = styled(ListItem)<ListItemProps>(({ theme }) => ({
+    "&.Mui-selected": {
+      backgroundColor: "#C1E3F7",
     },
-  });
-
-  const MiniDrawer = styled(Drawer, {
-    shouldForwardProp: (prop) => prop !== "open",
-  })<MiniDrawerProps>(({ theme, open }) => ({
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: "nowrap",
-    boxSizing: "border-box",
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    ...(open && {
-      ...openedMixin(theme),
-      "& .MuiDrawer-paper": openedMixin(theme),
-    }),
-    ...(!open && {
-      ...closedMixin(theme),
-      "& .MuiDrawer-paper": closedMixin(theme),
-    }),
-  }));
-
-  const AnimatedMiniDrawer = motion(
-    forwardRef((props: MiniDrawerProps, ref: React.Ref<HTMLDivElement>) => (
-      <MiniDrawer {...props} ref={ref} />
-    ))
-  );
-
-  const [open, setOpen] = useState(false);
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
-  const OuterButton = styled(IconButton)(({ theme }) => ({
-    position: "fixed",
-    top: 0,
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(["left"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    left: open ? "240px" : "0", // Moves the button to the left when the Sidebar is open
   }));
 
   return (
     <>
-      <OuterButton onClick={open ? handleDrawerClose : handleDrawerOpen}>
-        <ChevronLeftIcon />
-      </OuterButton>
-      <AnimatePresence>
-        {open && (
-          <AnimatedMiniDrawer open={open}>
-            <List>
-              {["Item 1", "Item 2", "Item 3"].map((text, index) => (
-                <ListItem key={text}>
-                  <ListItemText primary={text} />
-                </ListItem>
-              ))}
-            </List>
-          </AnimatedMiniDrawer>
-        )}
-      </AnimatePresence>
+      <Paper
+        sx={{
+          width: "100%",
+          height: "100%",
+          backgroundColor: "rgba(255,255,255, 0.7)",
+        }}
+      >
+        <List sx={{ color: "#848484" }}>
+          <ListItem>
+            <img src="OpenPIM-logo.svg" alt="" />
+          </ListItem>
+          {["アクティビティー", "商品一覧", "商品状況", "設定"].map(
+            (element, index) => (
+              <>
+                <StyledListItem
+                  key={index}
+                  selected={selected === index}
+                  onClick={() => setSelected(index)}
+                  sx={{ flexDirection: "column" }}
+                >
+                  <ArticleIcon></ArticleIcon>
+                  <div style={{ fontSize: "0.5rem" }}>{element}</div>
+                </StyledListItem>
+              </>
+            )
+          )}
+        </List>
+      </Paper>
     </>
   );
 }

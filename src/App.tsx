@@ -1,7 +1,9 @@
 import * as React from "react";
 import { Component } from "react";
 import AppTab from "./components/AppTab";
-import Header from "./components/Header";
+import Header from "./components/AppHeader";
+import AppSideBar from "./components/AppSideBar";
+import AppHeader from "./components/AppHeader";
 function App() {
   return (
     <>
@@ -18,9 +20,10 @@ function App() {
           style={{
             width: "6%",
             height: "100%",
-            backgroundColor: "rgba(255, 255, 255, 0.9)",
           }}
-        ></div>
+        >
+          <AppSideBar></AppSideBar>
+        </div>
         <div
           style={{
             width: "94%",
@@ -36,10 +39,9 @@ function App() {
             style={{
               width: "100%",
               height: "10%",
-              backgroundColor: "rgba(255, 255, 255, 0.9)",
             }}
           >
-            <Header></Header>
+            <AppHeader></AppHeader>
           </div>
           <div
             style={{
